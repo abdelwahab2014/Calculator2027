@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حاسبة المخمسات</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Tahoma, sans-serif;
+    background: #f3f4f6;
+    color: #172033;
+}
+
+.container {
+    max-width: 460px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.08);
+}
+
+h1 {
+    margin: 0 0 8px;
+    text-align: center;
+}
+
+.sub {
+    text-align: center;
+    color: #667085;
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin: 14px 0 7px;
+}
+
+input,
+select,
+button {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 17px;
+}
+
+input,
+select {
+    border: 1px solid #d0d5dd;
+    background: white;
+}
+
+button {
+    border: 0;
+    background: #172033;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 18px;
+}
+
+.result {
+    margin-top: 22px;
+    padding: 20px;
+    border-radius: 16px;
+    background: #f1f5f9;
+    text-align: center;
+}
+
+.result-title {
+    color: #667085;
+    font-size: 15px;
+}
+
+.result-value {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 8px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="card">
+
+<h1>حاسبة عدد المخمسات</h1>
+
+<div class="sub">
+عبـــــــــــــــــــــــدالوهاب آدم   
+</div>
+
+<label for="type">نوع المخمس</label>
+
+<select id="type">
+    <option value="12">12 عود</option>
+    <option value="6">6 عود</option>
+</select>
+
+<label for="length">الطول</label>
+
+<input
+    id="length"
+    type="number"
+    min="0"
+    step="any"
+    placeholder="أدخل الطول"
+>
+
+<label for="width">العرض</label>
+
+<input
+    id="width"
+    type="number"
+    min="0"
+    step="any"
+    placeholder="أدخل العرض"
+>
+
+<button onclick="calculate()">احسب</button>
+
+<div class="result">
+    <div class="result-title">الناتج النهائي</div>
+    <div id="result" class="result-value">—</div>
+</div>
+
+</div>
+</div>
+
+<script>
+const type = document.getElementById("type");
+
+function formatResult(n) {
+    n = Math.round(n * 100) / 100;
+
+    let whole = Math.floor(n);
+
+    let decimalNumber = Math.round((n - whole) * 100);
+
+    if (decimalNumber >= 100) {
+        whole++;
+        decimalNumber = 0;
+    }
+
+    if (decimalNumber === 0) {
+        return whole + " مخمس";
+    }
+
+    if (decimalNumber < 25) {
+        if (whole === 0) {
+            return decimalNumber + " عود";
+        }
+
+        return whole + " مخمس و " + decimalNumber + " عود";
+    }
+
+    if (decimalNumber === 25) {
+        if (whole === 0) {
+            return "ربع مخمس";
+        }
+
+        return whole + " مخمس و ربع مخمس";
+    }
+
+    if (decimalNumber < 50) {
+        if (whole === 0) {
+            return decimalNumber + " عود";
+        }
+
+        return whole + " مخمس و " + decimalNumber + " عود";
+    }
+
+    if (decimalNumber === 50) {
+        if (whole === 0) {
+            return "نص مخمس";
+        }
+
+        return whole + " مخمس و نص مخمس";
+    }
+
+    if (decimalNumber < 75) {
+        if (whole === 0) {
+            return decimalNumber + " عود";
+        }
+
+        return whole + " مخمس و " + decimalNumber + " عود";
+    }
+
+    if (decimalNumber === 75) {
+        if (whole === 0) {
+            return "ثلاثة أرباع مخمس";
+        }
+
+        return whole + " مخمس و ثلاثة أرباع مخمس";
+    }
+
+    if (decimalNumber < 100) {
+        if (whole === 0) {
+            return decimalNumber + " عود";
+        }
+
+        return whole + " مخمس و " + decimalNumber + " عود";
+    }
+
+    return whole + " مخمس";
+}
+
+function calculate() {
+    const length = Number(document.getElementById("length").value);
+    const width = Number(document.getElementById("width").value);
+    const result = document.getElementById("result");
+
+    if (
+        document.getElementById("length").value.trim() === "" ||
+        document.getElementById("width").value.trim() === "" ||
+        !Number.isFinite(length) ||
+        !Number.isFinite(width) ||
+        length <= 0 ||
+        width <= 0
+    ) {
+        result.textContent = "أدخل الطول والعرض";
+        return;
+    }
+
+    let n;
+
+    if (type.value === "12") {
+        n = (length * 2 * width * 2) / 600;
+    } else {
+        n = (length * width) / 600;
+    }
+
+    result.textContent = formatResult(n);
+}
+</script>
+
+</body>
+</html>
